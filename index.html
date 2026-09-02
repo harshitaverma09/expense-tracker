@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FinTrack - Expense Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">₹</div>
+
+            <div>
+                <h2>FinTrack</h2>
+                <small>Finance Manager</small>
+            </div>
+        </div>
+
+
+        <nav>
+
+            <button class="nav-btn active" data-page="dashboard">
+                📊 Dashboard
+            </button>
+
+            <button class="nav-btn" data-page="transactions">
+                💳 Transactions
+            </button>
+
+            <button class="nav-btn" data-page="budgets">
+                🎯 Budgets
+            </button>
+
+            <button class="nav-btn" data-page="reports">
+                📈 Reports
+            </button>
+
+            <button class="nav-btn" data-page="goals">
+                🏆 Savings Goals
+            </button>
+
+            <button class="nav-btn" data-page="sheets">
+                📑 Sheets
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button id="themeBtn">
+                🌙 Dark Mode
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="pageSubtitle">
+                    Your financial overview
+                </p>
+            </div>
+
+            <button class="primary-btn" id="quickAddBtn">
+                + Add Transaction
+            </button>
+
+        </header>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboard" class="page active-page">
+
+            <div class="welcome">
+                <div>
+                    <h2>Good day! 👋</h2>
+                    <p>Here's how your money is doing.</p>
+                </div>
+
+                <div class="month">
+                    September 2026
+                </div>
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card blue">
+                    <span>Current Balance</span>
+                    <h2 id="dashBalance">₹0</h2>
+                    <small>Available money</small>
+                </div>
+
+                <div class="stat-card green">
+                    <span>Total Income</span>
+                    <h2 id="dashIncome">₹0</h2>
+                    <small>This month</small>
+                </div>
+
+                <div class="stat-card red">
+                    <span>Total Expenses</span>
+                    <h2 id="dashExpense">₹0</h2>
+                    <small>This month</small>
+                </div>
+
+                <div class="stat-card purple">
+                    <span>Savings Rate</span>
+                    <h2 id="savingsRate">0%</h2>
+                    <small>Income saved</small>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        <h3>Recent Transactions</h3>
+
+                        <button
+                            class="text-btn"
+                            data-page-link="transactions">
+                            View All
+                        </button>
+                    </div>
+
+                    <div id="recentTransactions"></div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-title">
+                        <h3>Spending Overview</h3>
+                    </div>
+
+                    <div id="categoryChart" class="chart"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    <h3>Budget Progress</h3>
+
+                    <button
+                        class="text-btn"
+                        data-page-link="budgets">
+                        Manage
+                    </button>
+                </div>
+
+                <div id="dashboardBudgets"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TRANSACTIONS ================= -->
+
+        <section id="transactions" class="page">
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    <div>
+                        <h2>Transactions</h2>
+                        <p>Manage all your financial activity.</p>
+                    </div>
+
+                    <button class="primary-btn" id="addTransactionBtn">
+                        + New Transaction
+                    </button>
+
+                </div>
+
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="🔍 Search transactions..."
+                    >
+
+                    <select id="filterType">
+                        <option value="all">All Types</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+
+                    <select id="filterCategory">
+                        <option value="all">All Categories</option>
+                        <option value="Food">Food</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Health">Health</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                </div>
+
+
+                <div id="transactionTable"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= BUDGETS ================= -->
+
+        <section id="budgets" class="page">
+
+            <div class="page-intro">
+                <div>
+                    <h2>Budget Planner</h2>
+                    <p>Set spending limits for different categories.</p>
+                </div>
+
+                <button class="primary-btn" id="addBudgetBtn">
+                    + Add Budget
+                </button>
+            </div>
+
+
+            <div id="budgetGrid" class="budget-grid"></div>
+
+        </section>
+
+
+        <!-- ================= REPORTS ================= -->
+
+        <section id="reports" class="page">
+
+            <div class="page-intro">
+                <div>
+                    <h2>Financial Reports</h2>
+                    <p>Understand where your money goes.</p>
+                </div>
+            </div>
+
+
+            <div class="report-grid">
+
+                <div class="panel">
+
+                    <h3>Expense by Category</h3>
+
+                    <div id="reportChart" class="big-chart"></div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h3>Financial Summary</h3>
+
+                    <div id="reportSummary"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= GOALS ================= -->
+
+        <section id="goals" class="page">
+
+            <div class="page-intro">
+
+                <div>
+                    <h2>Savings Goals</h2>
+                    <p>Track the things you're saving for.</p>
+                </div>
+
+                <button class="primary-btn" id="addGoalBtn">
+                    + New Goal
+                </button>
+
+            </div>
+
+
+            <div id="goalGrid" class="goal-grid"></div>
+
+        </section>
+
+
+        <!-- ================= SHEETS ================= -->
+
+        <section id="sheets" class="page">
+
+            <div class="page-intro">
+
+                <div>
+                    <h2>Financial Sheets</h2>
+                    <p>Spreadsheet-style financial records.</p>
+                </div>
+
+            </div>
+
+
+            <div class="sheet-tabs">
+
+                <button class="sheet-tab active" data-sheet="expenseSheet">
+                    Expenses
+                </button>
+
+                <button class="sheet-tab" data-sheet="incomeSheet">
+                    Income
+                </button>
+
+                <button class="sheet-tab" data-sheet="budgetSheet">
+                    Budgets
+                </button>
+
+                <button class="sheet-tab" data-sheet="goalSheet">
+                    Goals
+                </button>
+
+            </div>
+
+
+            <div class="panel sheet-container">
+
+                <div id="expenseSheet" class="sheet active-sheet"></div>
+
+                <div id="incomeSheet" class="sheet"></div>
+
+                <div id="budgetSheet" class="sheet"></div>
+
+                <div id="goalSheet" class="sheet"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- TRANSACTION MODAL -->
+
+    <div id="transactionModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2>Add Transaction</h2>
+
+                <button class="close-btn" data-close="transactionModal">
+                    ×
+                </button>
+            </div>
+
+
+            <form id="transactionForm">
+
+                <label>Description</label>
+
+                <input
+                    type="text"
+                    id="description"
+                    placeholder="e.g. Grocery shopping"
+                    required
+                >
+
+
+                <label>Amount</label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="e.g. 1500"
+                    min="1"
+                    required
+                >
+
+
+                <label>Type</label>
+
+                <select id="type">
+
+                    <option value="expense">
+                        Expense
+                    </option>
+
+                    <option value="income">
+                        Income
+                    </option>
+
+                </select>
+
+
+                <label>Category</label>
+
+                <select id="category">
+
+                    <option value="Food">🍔 Food</option>
+                    <option value="Shopping">🛍️ Shopping</option>
+                    <option value="Transport">🚗 Transport</option>
+                    <option value="Bills">💡 Bills</option>
+                    <option value="Entertainment">🎮 Entertainment</option>
+                    <option value="Health">❤️ Health</option>
+                    <option value="Education">📚 Education</option>
+                    <option value="Other">📦 Other</option>
+
+                </select>
+
+
+                <label>Date</label>
+
+                <input type="date" id="transactionDate" required>
+
+
+                <button class="primary-btn full-btn">
+                    Save Transaction
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUDGET MODAL -->
+
+    <div id="budgetModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>Create Budget</h2>
+
+                <button class="close-btn" data-close="budgetModal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="budgetForm">
+
+                <label>Category</label>
+
+                <select id="budgetCategory">
+
+                    <option value="Food">Food</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Health">Health</option>
+                    <option value="Education">Education</option>
+                    <option value="Other">Other</option>
+
+                </select>
+
+
+                <label>Monthly Limit</label>
+
+                <input
+                    type="number"
+                    id="budgetAmount"
+                    min="1"
+                    placeholder="₹10000"
+                    required
+                >
+
+
+                <button class="primary-btn full-btn">
+                    Save Budget
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- GOAL MODAL -->
+
+    <div id="goalModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>Create Savings Goal</h2>
+
+                <button class="close-btn" data-close="goalModal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="goalForm">
+
+                <label>Goal Name</label>
+
+                <input
+                    type="text"
+                    id="goalName"
+                    placeholder="e.g. New Laptop"
+                    required
+                >
+
+
+                <label>Target Amount</label>
+
+                <input
+                    type="number"
+                    id="goalTarget"
+                    min="1"
+                    placeholder="₹80000"
+                    required
+                >
+
+
+                <label>Already Saved</label>
+
+                <input
+                    type="number"
+                    id="goalSaved"
+                    min="0"
+                    placeholder="₹10000"
+                    required
+                >
+
+
+                <button class="primary-btn full-btn">
+                    Create Goal
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
